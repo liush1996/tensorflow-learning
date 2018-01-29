@@ -1,0 +1,34 @@
+>>> x_train = [1, 2, 3]
+>>> y_train = [1, 2, 3]
+>>> W = tf.Variable(tf.random_normal([1]), name='weight')
+>>> b = tf.Variable(tf.random_normal([1]), name='bias')
+>>> hypothesis= x_train*W +b
+>>> cost = tf.reduce_mean(tf.square(hypothesis - y_train))
+>>> optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
+>>> train = optimizer.minimize(cost)
+>>> sess = tf.Session()
+>>> sess.run(tf.global_variables_initializer())
+>>> for step in range(2001):
+...  sess.run(train)
+...    if step % 20 == 0: 
+  File "<stdin>", line 3
+    if step % 20 == 0: 
+    ^
+IndentationError: unexpected indent
+>>> for step in range(2001):
+...    sess.run(train)
+...       if step % 20 == 0 :
+  File "<stdin>", line 3
+    if step % 20 == 0 :
+    ^
+IndentationError: unexpected indent
+>>> for step in range(2001):
+...    sess.run(train)
+...    if step % 20 == 0:
+...        print(step, sess.run(cost), sess.run(W), sess.run(b))
+... 
+
+
+this is the code to minimize the cost and the cost equation is cost(W)=1/m *sum [(Wx(i)-y(i))^2]
+I made a mistake when I followed this code. The mistake is mainly about the space and the if sentence should
+have the same starting point with sess sentence in the for loop.
