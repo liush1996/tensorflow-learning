@@ -1,0 +1,110 @@
+After a week of struggle, the result is I have successfully installed Ubuntu 17.10 on Oracle VM VirtualBox(as a backup plan) and Ubuntu 17.10 on my external hard drive (which can boot from my PC with GTX 1080).
+
+Ubuntu 17.10 TensorFlow on Oracle VM VirtualBox :
+
+it was a simple process to install Ubuntu on a VM.
+ 
+1. download VirtualBox from https://www.virtualbox.org/
+install it
+2. download Ubuntu image from
+https://www.osboxes.org/ubuntu/
+3. use Oracle VM VirtualBox to load the image
+4. install TensorFlow with Virtualenv
+follow instruction from https://www.tensorflow.org/install/install_linux#InstallingVirtualenv
+
+and that's it
+
+Ubuntu 17.10 TensorFlow-GPU r1.5 + CUDA 9.0 + cuDNN v7  with GTX1080GPU i5CPU 12gRAM PC:
+
+It was a painful process, tried numerous methods, tried Ubuntu version 16.04 LTS version which has a conflict with GeForce GTX 1080, debugged all sorts of possibilities of sources of error. Tried different images; different USB to make the bootable drive; different hard drive to install the system on; integrity of the system etc. back and forth I install different versions of Ubuntu for over 30 times. But nonetheless here is the final solution for my PC. The following instructions are specified for GTX1080 or GTX1080ti
+
+1.  Requirements:
+a hard drive with a minimum of 16Gbs of  space for installing the system
+a USB drive with a minimum of 8Gbs of space for burning the ISO image of Ubuntu on
+2. Download Ubuntu image from https://www.ubuntu.com/download/desktop
+3. use Rufus from https://rufus.akeo.ie/
+to burn the ISO image to the USB drive
+4. boot from the USB and install Ubuntu onto the hard drive following instructions from
+https://tutorials.ubuntu.com/tutorial/tutorial-install-ubuntu-desktop#4
+5. start up the Ubuntu 17.10 system
+Press Ctrl + Alt + T to open terminal
+use the following command
+
+sudo add-apt-repository ppa:graphics-drivers/ppa          #install graphic card driver
+sudo apt update
+sudo apt install nvidia-384 nvidia-384-dev
+sudo reboot                                               #reboot then open the terminal again
+
+nvidia-smi                                                #verify the installation
+                                                          #environment for CUDA9
+sudo apt-get install g++ freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev libglu1-mesa libglu1-mesa-dev
+
+sudo apt install gcc-6
+sudo apt install g++-6
+
+wget https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run
+
+chmod +x cuda_9.0.176_384.81_linux-run
+
+sudo ./cuda_9.0.176_384.81_linux-run --override
+
+#during the installation:
+You are attempting to install on an unsupported configuration. Do you wish to continue?
+y
+Install NVIDIA Accelerated Graphics Driver for Linux-x86_64 384.81?
+n
+Install the CUDA 9.0 Toolkit?
+y
+Enter Toolkit Location
+[default location]
+Do you want to install a symbolic link at /usr/local/cuda?
+y
+Install the CUDA 9.0 Samples?
+y
+Enter CUDA Samples Location
+[default location]
+
+sudo ln -s /usr/bin/gcc-6 /usr/local/cuda/bin/gcc
+sudo ln -s /usr/bin/g++-6 /usr/local/cuda/bin/g++
+
+#login and download cuDNN v7.0.3 from https://developer.nvidia.com/rdp/form/cudnn-download-survey
+
+tar -zxvf cudnn-9.0-linux-x64-v7.tgz
+sudo cp cuda/include/cudnn.h /usr/local/cuda/include
+sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+sudo chmod a+r /usr/local/cuda/include/cudnn.h
+sudo chmod a+r /usr/local/cuda/lib64/libcudnn*
+
+sudo bash
+nano ~/.bashrc
+
+#add following two line into bashrc
+export PATH=${PATH}:/usr/local/cuda-9.0/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}/usr/local/cuda-9.0/lib64:/usr/local/cuda-9.0/lib:/usr/local/cuda/extras/CUPTI/lib64
+
+source ~/.bashrc
+
+sudo apt-get install python-pip python-dev python-virtualenv
+
+virtualenv --system-site-packages ~/tensorflow
+
+source ~/tensorflow/bin/activate
+
+easy_install -U pip
+
+pip install --upgrade tensorflow-gpu
+
+#that's all
+commands are learned from following links:
+https://www.tensorflow.org/install/install_linux#InstallingVirtualenv
+http://abhay.harpale.net/blog/linux/nvidia-gtx-1080-installation-on-ubuntu-16-04-lts/
+http://abhay.harpale.net/blog/machine-learning/deep-learning/getting-tensorflow-to-work-with-gpu-nvidia-gtx-1080-on-ubuntu-16-04-lts/
+https://askubuntu.com/questions/967332/how-can-i-install-cuda-9-on-ubuntu-17-10
+https://zhuanlan.zhihu.com/p/30781460
+https://tweakmind.com/ubuntu-17-10-cuda-9-tensorflow-1-4/
+
+
+although it took me about 30hrs to finally figure out how to install Tensorflow-GPU, the result was satisfying 
+
+according to cifar10.py from TensorFlow tutorial for testing Tensorflow-GPU is 80 times faster than the VM TensorFlow on the same PC! 
+the time I spend into making the GPU work was totaly worth it.
