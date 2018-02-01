@@ -1,0 +1,8 @@
+SSD: Single Shot MultiBox Detector
+I gonna install the SSD element to my computer for the object detection in an image.
+I plan to download these libraries first and try to run few examples for the object detection.
+
+
+
+here is the link.
+https://github.com/weiliu89/caffe/tree/ssd#installation
