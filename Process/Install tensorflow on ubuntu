@@ -1,0 +1,32 @@
+I installed the CPU version of tensorflow on ubuntu.
+
+
+Installing with Virtualenv
+Take the following steps to install TensorFlow with Virtualenv:
+
+1. Install pip and Virtualenv by issuing one of the following commands:
+
+ $ sudo apt-get install python3-pip python3-dev python-virtualenv # for Python 3.n
+
+2. Create a Virtualenv environment by issuing one of the following commands:
+
+  $ virtualenv --system-site-packages -p python3 targetDirectory # for Python 3.n
+  
+3. Activate the Virtualenv environment by issuing one of the following commands:
+  $ source ~/tensorflow/bin/activate # bash, sh, ksh, or zsh
+  
+4. Ensure pip ≥8.1 is installed:
+
+    (tensorflow)$ easy_install -U pip
+5. Install tensorflow.
+     (tensorflow)$ pip3 install --upgrade tensorflow     # for Python 3.n
+     
+6. Test the installation.
+
+ # Python
+import tensorflow as tf
+hello = tf.constant('Hello, TensorFlow!')
+sess = tf.Session()
+print(sess.run(hello))
+
+The code works and give the output 'Hello,Tensorflow!')
