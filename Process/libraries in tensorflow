@@ -1,0 +1,35 @@
+    sklearn module
+    
+    $ pip3 install sklearn
+    
+    spicy module
+    
+    $ pip3 install spicy
+    
+    PIL module
+    
+    $ pip3 install pillow
+    
+    cv2 module
+    
+    $ sudo pip3 install opencv-python        (I met the same permission problem and use the sudo command )
+    
+    matplotlib module
+    
+    $ pip3 install matplotlib 
+    
+    tkinter module
+    
+    $ sudo apt-get install python3-tk
+    
+    moviepy module
+    
+    $ pip3 install moviepy
+    
+    ffmpeg
+    
+    pulg below codes in python
+    import imageio
+    imageio.plugins.ffmpeg.download()
+
+    
