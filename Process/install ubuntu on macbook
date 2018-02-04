@@ -1,0 +1,46 @@
+I choose the USB installation way to get the dual systems with both MacOs and ubuntu 16.04.
+
+Preparing the USB Flash Drive
+
+One of the first stumbling blocks you may encounter is how the flash drive should be formatted. Many folks mistakenly believe the flash drive needs to be in a bootable FAT format, requiring the partition type to be Master Boot Record, and the format type to be MS-DOS (FAT). While this may be true of installations on PCs, your Mac is looking for GUID partition types for booting, so we need to format the USB flash drive for use on the Mac.
+
+Insert the USB flash drive, and then launch Disk Utility, which is located at /Applications/Utilities/.
+Locate the flash drive in Disk Utility's sidebar. Be sure to select the actual flash drive, and not the formatted volume that may appear just below the flash drive's manufacturer name.
+Warning: The following process will completely erase any data you may have on the USB flash drive.
+Click the Erase button in the Disk Utility toolbar.
+The Erase sheet will drop down. Set the Erase sheet to the following options:
+Name: UBUNTU
+Format: MS-DOS (FAT)
+Scheme: GUID Partition Map
+Once the Erase sheet matches the settings above, click the Erase button.
+The USB flash drive will be erased. When the process is complete, click the Done button.
+Before you leave Disk Utility you need to make a note of the flash drive's device name. Make sure the flash drive named UBUNTU is selected in the sidebar, then in the main panel, look for the entry labeled Device. You should see the device name, such as disk2s2, or in my case, disk7s2. Write down the device name; you will need it later.
+
+
+We're going to use UNetbootin, a special utility for creating the Live Ubuntu installer on the USB flash drive. UNetbootin will download the Ubuntu ISO, convert it to an image format the Mac can use, create the boot chain needed by the installer for the Mac OS, and then copy it to the USB flash drive.
+
+UNetbootin can be downloaded from the UNetbootin github site. Be sure to pick the Mac OS X version (even if you're using macOS Sierra).
+The utility will download as a disk image, with the name unetbootin-mac-625.dmg. The actual number in the file name may change as newer versions are released.
+Locate the downloaded UNetbootin disk image; it will probably be in your Downloads folder. Double-click the .dmg file to mount the image on your Mac's desktop.
+The UNetbootin image will open. You don’t need to move the app to your Applications folder, though you can if you wish. The app will work just fine from within the disk image.
+Launch UNetbootin by right-clicking on the unetbootin app and selecting Open from the popup menu. We're using this method to launch the app because the developer isn't a registered Apple developer, and your Mac's security settings may prevent the app from launching. This method of launching the app lets you bypass the basic security settings without having to go into the System Preferences to change them.
+Your Mac's security system will still warn you about the developer of the app being unrecognized, and ask if you really want to run the app. Click the Open button.
+A dialog box will open, saying osascript wants to make changes. Enter your administrator password and click OK.
+The UNetbootin window will open.
+Note: UNetbootin supports creating the Live USB installer for Linux using an ISO file you previously downloaded, or it can download the Linux distribution for you. Do not choose the ISO option; UNetbootin is currently unable to create a Mac-compatible bootable USB drive using a Linux ISO you download as the source. It can, however, properly create the bootable USB drive when it downloads the Linux files from within the app.
+Make sure Distribution is selected, then use the Select Distribution dropdown menu to pick the Linux distribution you would like to install on the USB flash drive. For this project, select Ubuntu.
+Use the Select Version dropdown menu to select 16.04_Live_x64.
+Tip: We selected the 16.04_Live_x64 version because this Mac uses a 64-bit architecture. Some early Intel Macs used a 32-bit architecture, and you may need to select the 16.04_Live version instead.
+Tip: If you’re a bit adventurous, you can select the Daily_Live or Daily_Live_x64 versions, which will have the most current beta version of Ubuntu. This can be helpful if you have issues with the Live USB running correctly on your Mac, or with drivers such as Wi-Fi, Display, or Bluetooth not working.
+The UNetbootin app should now list the type (USB Drive) and Drive name that the Ubuntu Live distribution will be copied to. The Type menu should be populated with USB Drive, and the Drive should match up to the device name you made a note of earlier, when you were formatting the USB flash drive.
+Once you have confirmed that UNetbootin has the proper Distribution, Version, and USB Drive selected, click the OK button.
+UNetbootin will download the selected Linux distribution, create the Live Linux install files, create the bootloader, and copy them to your USB flash drive.
+When UNetbootin finishes, you may see the following warning: "The created USB device will not boot off a Mac. Insert it into a PC, and select the USB boot option in the BIOS boot menu." You can ignore this warning as long as you used the Distribution option and not the ISO option when creating the bootable USB drive.
+
+
+If you plan on permanently installing Ubuntu on your Mac while keeping Mac OS, you'll need to create one or more volumes specifically for housing the Ubuntu OS.
+
+The process is actually very simple; if you've ever partitioned your Mac's drives, then you already know the steps involved. Essentially, you'll use Disk Utility to partition an existing volume, such as your Mac's startup drive, to make room for a second volume. You could also use an entire drive, other than your startup drive, to house Ubuntu, or you could create another partition on a non-startup drive. As you can see, there are lots of choices.
+
+Just to add another option, you could also install Ubuntu on an external drive connected via USB or Thunderbolt.
+
