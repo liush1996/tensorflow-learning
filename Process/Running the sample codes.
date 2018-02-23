@@ -1,0 +1,14 @@
+After trouble shooting all of the problems, we successfully run the sample codes and the results match the expectations.
+python inference.py -m demo
+This will take the images from sample_images, annotate them, and display them on screen
+This command is aim to run predictions using the pre-trained model and we plan to train the model from scratch other dataset.
+
+
+   1. Download the LISA Traffic Sign Dataset, and store it in a directory $LISA_DATA
+   2. Documentation for this step not finalized, but you want to create data_raw_400x260.p such that data_prep.py can work with it. Also, resize all images to 400x260 and convert them to grayscale, and make it available in a directory $ROOT/resized_images_400x260
+   3. python data_prep.py
+        This performs box matching between ground-truth boxes and default boxes, and packages the data into a format used later in the pipeline
+   4. python train.py
+        This trains the SSD model
+   5. python inference.py -m demo
+
