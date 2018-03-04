@@ -1,0 +1,12 @@
+  File "inference.py", line 189, in <module>
+    generate_output(input_files, mode)
+  File "inference.py", line 125, in generate_output
+    model = SSDModel()
+  File "/home/shihan/Downloads/ssd_tensorflow_traffic_sign_detection-master/model.py", line 182, in SSDModel
+    model_helper = ModelHelper(model['y_pred_conf'], model['y_pred_loc'])
+  File "/home/shihan/Downloads/ssd_tensorflow_traffic_sign_detection-master/model.py", line 68, in ModelHelper
+    loc_loss = tf.select(smooth_l1_condition, loc_loss_l2, loc_loss_l1)
+AttributeError: module 'tensorflow' has no attribute 'select'
+
+
+change  tf.where(smooth_l1_condition, loc_loss_l2, loc_loss_l1) instead of tf.select(smooth_l1_condition, loc_loss_l2, loc_loss_l1)
