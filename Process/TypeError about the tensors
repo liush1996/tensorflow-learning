@@ -1,0 +1,28 @@
+I got the error below when I was running the inference file.
+  File "inference.py", line 189, in <module>
+    generate_output(input_files, mode)
+  File "inference.py", line 125, in generate_output
+    model = SSDModel()
+  File "/home/shihan/Downloads/ssd_tensorflow_traffic_sign_detection-master/model.py", line 178, in SSDModel
+    model = AlexNet()
+  File "/home/shihan/Downloads/ssd_tensorflow_traffic_sign_detection-master/model.py", line 159, in AlexNet
+    final_pred_conf = tf.concat(1, preds_conf)
+  File "/home/shihan/tensorflow/lib/python3.5/site-packages/tensorflow/python/ops/array_ops.py", line 1127, in concat
+    dtype=dtypes.int32).get_shape().assert_is_compatible_with(
+  File "/home/shihan/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/ops.py", line 932, in convert_to_tensor
+    as_ref=False)
+  File "/home/shihan/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/ops.py", line 1022, in internal_convert_to_tensor
+    ret = conversion_func(value, dtype=dtype, name=name, as_ref=as_ref)
+  File "/home/shihan/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/constant_op.py", line 233, in _constant_tensor_conversion_function
+    return constant(v, dtype=dtype, name=name)
+  File "/home/shihan/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/constant_op.py", line 212, in constant
+    value, dtype=dtype, shape=shape, verify_shape=verify_shape))
+  File "/home/shihan/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/tensor_util.py", line 413, in make_tensor_proto
+    _AssertCompatible(values, dtype)
+  File "/home/shihan/tensorflow/lib/python3.5/site-packages/tensorflow/python/framework/tensor_util.py", line 328, in _AssertCompatible
+    (dtype.name, repr(mismatch), type(mismatch).__name__))
+TypeError: Expected int32, got list containing Tensors of type '_Message' instead.
+
+
+
+It's because of the tensorflow has updated the parameter order of concat, I try modifying to tf.concat(preds_conf, 1) instead of tf.concat(1,preds_conf)
